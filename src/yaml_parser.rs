@@ -4,11 +4,12 @@ use yaml_rust::YamlLoader;
 
 pub struct YamlParser {}
 impl YamlParser {
-    pub fn get_tags(&self, file: &str, tag: &str) -> yaml_rust::Yaml {
+    pub fn get_tags(&self, file: &str, tag: Option<String>) -> yaml_rust::Yaml {
         let doc = self.load_file(file);
-        let jobs = doc[tag].clone();
-
-        jobs
+        match tag {
+            None => doc,
+            Some(extract_tag) => doc[&extract_tag[..]].clone(),
+        }
     }
     fn load_file(&self, file: &str) -> yaml_rust::Yaml {
         let mut file = File::open(file).expect("Unable to open file");

@@ -10,7 +10,7 @@ impl DotGenerator {
         result = OutputWriter::prologue();
 
         for file in &args[1..] {
-            let jobs = yaml_parser.get_tags(&file, "jobs");
+            let jobs = yaml_parser.get_tags(&file, None);
             result += &self.generate_dot(jobs);
         }
 

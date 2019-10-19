@@ -85,10 +85,14 @@ fn generate_node_and_edge(
         *job_name = field.1.as_str().unwrap().to_owned();
     } else if field.0.as_str() == Some("parent") {
         *job_parent = field.1.as_str().unwrap().to_owned();
-        println!("  {} -> {}", job_name, job_parent);
+        write_output(job_name, job_parent, hex_color);     
+    }
+}
+
+fn write_output(job_name: &String, job_parent: &String, hex_color: &String){
+    println!("  {} -> {}", job_name, job_parent);
         println!(
             "  \"{}\" [style=filled, fillcolor=\"{}\"]",
             job_name, hex_color
         );
-    }
 }

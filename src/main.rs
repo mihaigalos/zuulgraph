@@ -16,7 +16,6 @@ mod test_unit;
 fn main() {
     let args = get_program_arguments();
     let dot_generator = DotGenerator {};
-    println!("{:?}",args);
     println!("{}",dot_generator.run(args));
 }
 

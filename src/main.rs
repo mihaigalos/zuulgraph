@@ -45,19 +45,17 @@ fn get_random_color() -> std::string::String {
     let red = format!("{:X}", rand::thread_rng().gen::<u8>());
     let green = format!("{:X}", rand::thread_rng().gen::<u8>());
     let blue = format!("{:X}", rand::thread_rng().gen::<u8>());
-
     let hex_color = red + &green + &blue;
 
     hex_color
 }
 
 fn generate_dot(jobs: yaml_rust::Yaml) {
-    let mut job_name = "";
-    let mut job_parent;
-
     let hexified_rgb = get_random_color().to_owned();
     let hex_color = "#".to_owned() + &hexified_rgb;
 
+    let mut job_name = "";
+    let mut job_parent;
     for job in jobs.as_vec().unwrap() {
         for field in job.as_hash().unwrap() {
             if field.0.as_str() == Some("name") {

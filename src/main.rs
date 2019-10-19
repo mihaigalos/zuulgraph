@@ -6,9 +6,11 @@ use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 use yaml_rust::YamlLoader;
+use std::process;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let args = get_program_arguments();
+
     prologue();
 
     for file in &args[1..] {
@@ -17,6 +19,15 @@ fn main() {
     }
 
     epilogue();
+}
+
+fn get_program_arguments() -> Vec<String>{
+    let args: Vec<String> = env::args().collect();
+    if args.len() == 1 {
+        println!("Usage: zuulgraph <file1.yaml> <file2.yaml> .. <file3.yaml>");
+        process::exit(0x0001);
+    }
+    args
 }
 
 fn prologue() {

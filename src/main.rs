@@ -1,16 +1,20 @@
 extern crate yaml_rust;
 
+use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 use yaml_rust::yaml::{Hash, Yaml};
 use yaml_rust::YamlLoader;
 
 fn main() {
+    let args: Vec<String> = env::args().collect();
     prologue();
-    let jobs1 = load_file("./test/yaml/demo_file1.yaml");
-    generate_dot(jobs1);
-    let jobs2 = load_file("./test/yaml/demo_file2.yaml");
-    generate_dot(jobs2);
+
+    for file in &args[1..] {
+        let jobs = load_file(&file);
+        generate_dot(jobs);
+    }
+
     epilogue();
 }
 

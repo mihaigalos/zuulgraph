@@ -1,10 +1,7 @@
-use regex::Regex;
-use crate::dot_generator::DotGenerator;
-
 #[cfg(test)]
 mod tests {
-    // Note this useful idiom: importing names from outer (for mod tests) scope.
-    use super::*;
+    use regex::Regex;
+    use crate::dot_generator::DotGenerator;
 
     #[test]
     fn test_when_typical() {

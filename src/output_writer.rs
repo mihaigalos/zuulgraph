@@ -1,18 +1,16 @@
 pub struct OutputWriter {}
 impl OutputWriter {
-    pub fn prologue() {
-        println!("digraph D {{");
+    pub fn prologue() -> String{
+        "digraph D {\n".to_string()
     }
 
-    pub fn epilogue() {
-        println!("}}");
+    pub fn epilogue() -> String{
+        "}\n".to_string()
     }
 
-    pub fn write_output(job_name: &String, job_parent: &String, hex_color: &String) {
-        println!("  {} -> {}", job_name, job_parent);
-        println!(
-            "  \"{}\" [style=filled, fillcolor=\"{}\"]",
-            job_name, hex_color
-        );
+    pub fn write_output(job_name: &String, job_parent: &String, hex_color: &String) -> String {
+        let mut result = format!("  {} -> {}\n", job_name, job_parent);
+        result += &format!("  \"{}\" [style=filled, fillcolor=\"{}\"]\n", job_name, hex_color);
+        result
     }
 }

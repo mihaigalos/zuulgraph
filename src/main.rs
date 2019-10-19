@@ -14,7 +14,7 @@ use dot_generator::DotGenerator;
 fn main() {
     let args = get_program_arguments();
     let dot_generator = DotGenerator {};
-    dot_generator.run(args);
+    println!("{}",dot_generator.run(args));
 }
 
 fn get_program_arguments() -> Vec<String> {

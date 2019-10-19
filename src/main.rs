@@ -7,8 +7,10 @@ use yaml_rust::YamlLoader;
 
 fn main() {
     prologue();
-    load_file("./test/yaml/demo_file1.yaml");
-    load_file("./test/yaml/demo_file2.yaml");
+    let jobs1 = load_file("./test/yaml/demo_file1.yaml");
+    generate_dot(jobs1);
+    let jobs2 = load_file("./test/yaml/demo_file2.yaml");
+    generate_dot(jobs2);
     epilogue();
 }
 
@@ -20,7 +22,7 @@ fn epilogue() {
     println!("}}");
 }
 
-fn load_file(file: &str) {
+fn load_file(file: &str) -> yaml_rust::Yaml {
     let mut file = File::open(file).expect("Unable to open file");
     let mut contents = String::new();
 
@@ -29,8 +31,12 @@ fn load_file(file: &str) {
 
     let docs = YamlLoader::load_from_str(&contents).unwrap();
     let doc = &docs[0];
-    let jobs = &doc["jobs"];
+    let jobs = doc["jobs"].clone();
 
+    jobs
+}
+
+fn generate_dot(jobs: yaml_rust::Yaml) {
     let mut job_name = "";
     let mut job_parent;
 

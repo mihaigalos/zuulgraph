@@ -5,8 +5,8 @@ use rand::Rng;
 use std::env;
 use std::fs::File;
 use std::io::prelude::*;
-use yaml_rust::YamlLoader;
 use std::process;
+use yaml_rust::YamlLoader;
 
 fn main() {
     let args = get_program_arguments();
@@ -21,7 +21,7 @@ fn main() {
     epilogue();
 }
 
-fn get_program_arguments() -> Vec<String>{
+fn get_program_arguments() -> Vec<String> {
     let args: Vec<String> = env::args().collect();
     if args.len() == 1 {
         println!("Usage: zuulgraph <file1.yaml> <file2.yaml> .. <file3.yaml>");
@@ -65,20 +65,30 @@ fn generate_dot(jobs: yaml_rust::Yaml) {
     let hexified_rgb = get_random_color().to_owned();
     let hex_color = "#".to_owned() + &hexified_rgb;
 
-    let mut job_name = "";
-    let mut job_parent;
+    let mut job_name: String = "".to_string();
+    let mut job_parent: String = "".to_string();
+
     for job in jobs.as_vec().unwrap() {
         for field in job.as_hash().unwrap() {
-            if field.0.as_str() == Some("name") {
-                job_name = field.1.as_str().unwrap();
-            } else if field.0.as_str() == Some("parent") {
-                job_parent = field.1.as_str().unwrap();
-                println!("  {} -> {}", job_name, job_parent);
-                println!(
-                    "  \"{}\" [style=filled, fillcolor=\"{}\"]",
-                    job_name, hex_color
-                );
-            }
+            generate_node_and_edge(field, &hex_color, &mut job_name, &mut job_parent);
         }
+    }
+}
+
+fn generate_node_and_edge(
+    field: (&yaml_rust::yaml::Yaml, &yaml_rust::yaml::Yaml),
+    hex_color: &String,
+    job_name: &mut String,
+    job_parent: &mut String,
+) {
+    if field.0.as_str() == Some("name") {
+        *job_name = field.1.as_str().unwrap().to_owned();
+    } else if field.0.as_str() == Some("parent") {
+        *job_parent = field.1.as_str().unwrap().to_owned();
+        println!("  {} -> {}", job_name, job_parent);
+        println!(
+            "  \"{}\" [style=filled, fillcolor=\"{}\"]",
+            job_name, hex_color
+        );
     }
 }

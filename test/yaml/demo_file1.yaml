@@ -1,14 +1,14 @@
 - job:
-  name: JobA_file1
+    name: JobA_file1
 
 - job:
-  name: JobB_file1
-  parent: A_file2
+    name: JobB_file1
+    parent: A_file2
 
 - job:
-  name: JobC_file1
-  parent: JobB_file1
+    name: JobC_file1
+    parent: JobB_file1
 
 - job:
-  name: JobD_file1
-  parent: JobB_file1
+    name: JobD_file1
+    parent: JobB_file1

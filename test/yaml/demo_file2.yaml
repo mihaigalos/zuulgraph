@@ -1,3 +1,3 @@
 - job:
-  name: A_file2
-  parent: JobA_file1
+    name: A_file2
+    parent: JobA_file1

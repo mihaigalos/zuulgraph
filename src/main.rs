@@ -16,7 +16,7 @@ mod test_unit;
 fn main() {
     let args = get_program_arguments();
     let dot_generator = DotGenerator {};
-    println!("{}",dot_generator.run(args));
+    println!("{}", dot_generator.run(args));
 }
 
 fn get_program_arguments() -> Vec<String> {

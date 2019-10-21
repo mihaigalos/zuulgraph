@@ -7,22 +7,25 @@ impl DotGenerator {
     pub fn run(&self, args: Vec<String>) -> String {
         let yaml_parser = YamlParser {};
         let mut result: String;
+        let mut colors = Vec::new();;
         result = OutputWriter::prologue();
 
         for file in &args[1..] {
+            let hexified_rgb = RandomColorGenerator::get_random_color().to_owned();
+            let hex_color = "#".to_owned() + &hexified_rgb;
             let jobs = yaml_parser.get_tags(&file, None);
-            result += &self.generate_dot(jobs);
+            result += &self.generate_dot(jobs, &hex_color);
+            colors.push(hex_color);
         }
+
+        result += &OutputWriter::write_legend(args[1..].to_vec(), colors);
 
         result += &OutputWriter::epilogue();
         result
     }
 
-    fn generate_dot(&self, jobs: yaml_rust::Yaml) -> String {
+    fn generate_dot(&self, jobs: yaml_rust::Yaml, hex_color: &String) -> String {
         let mut result: String = "".to_string();
-
-        let hexified_rgb = RandomColorGenerator::get_random_color().to_owned();
-        let hex_color = "#".to_owned() + &hexified_rgb;
 
         let mut job_name: String = "".to_string();
         let mut job_parent: String = "".to_string();

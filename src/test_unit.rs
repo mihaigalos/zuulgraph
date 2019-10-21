@@ -16,6 +16,7 @@ mod tests {
         .collect();
         let expected = concat!(
             "digraph D {\n",
+            "  rankdir=RL;\n",
             "  \"JobB_file1\" -> \"A_file2\"\n",
             "  \"JobB_file1\" [style=filled, fillcolor=\"\"]\n",
             "  \"JobC_file1\" -> \"JobB_file1\"\n",
@@ -24,6 +25,11 @@ mod tests {
             "  \"JobD_file1\" [style=filled, fillcolor=\"\"]\n",
             "  \"A_file2\" -> \"JobA_file1\"\n",
             "  \"A_file2\" [style=filled, fillcolor=\"\"]\n",
+            "  subgraph cluster_01 {\n",
+            "    label = \"Legend\";\n",
+            "    \"test/yaml/demo_file1.yaml\" [style=filled, fillcolor=\"\"]\n",
+            "    \"test/yaml/demo_file2.yaml\" [style=filled, fillcolor=\"\"]\n",
+            "  }\n",
             "}\n"
         );
 

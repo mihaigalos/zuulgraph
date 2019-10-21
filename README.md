@@ -1,4 +1,4 @@
-# ZuulGraph
+# ZuulGraph [![Build Status](https://travis-ci.org/mihaigalos/zuulgraph.svg?branch=master)](https://travis-ci.org/mihaigalos/zuulgraph) [![license](https://img.shields.io/badge/license-GPLv3-brightgreen.svg)](LICENSE)
 
 Zuul graph generator of dependencies between buildjobs.
 

@@ -1,7 +1,7 @@
 pub struct OutputWriter {}
 impl OutputWriter {
     pub fn prologue() -> String {
-        "digraph D {\n".to_string()
+        "digraph D {\n  rankdir=RL;\n".to_string()
     }
 
     pub fn epilogue() -> String {

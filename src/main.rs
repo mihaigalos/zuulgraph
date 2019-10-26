@@ -1,3 +1,5 @@
+#![cfg_attr(feature = "strict", deny(warnings))]
+
 extern crate yaml_rust;
 
 use std::env;

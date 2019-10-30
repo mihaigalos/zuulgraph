@@ -1,7 +1,9 @@
 pub struct OutputWriter {}
 impl OutputWriter {
     pub fn prologue() -> String {
-        "digraph D {\n  rankdir=RL;\n".to_string()
+        let mut result = format!("digraph D {{\n  rankdir=RL;\n");
+        result += format!("node[shape=record]\n").as_str();
+        result.to_string()
     }
 
     pub fn epilogue() -> String {
@@ -21,12 +23,23 @@ impl OutputWriter {
         result
     }
 
-    pub fn write_output(job_name: &String, job_parent: &String, hex_color: &String) -> String {
+    pub fn write_output(job_name: &String, job_parent: &String, attributes: &Vec<String>, hex_color: &String) -> String {
         let mut result = format!("  \"{}\" -> \"{}\"\n", job_name, job_parent);
         result += &format!(
-            "  \"{}\" [style=filled, fillcolor=\"{}\"]\n",
+            "  \"{}\" [style=filled, fillcolor=\"{}\"",
             job_name, hex_color
         );
+
+        if attributes.len() > 0 {
+            result += format!(", label=\"{{ {} | ",job_name).as_str();
+            for attribute in attributes.iter(){
+                //println!("{:?}", attribute);
+                result += format!("{}\\n ",attribute).as_str();
+            }
+            result += format!("}}\"").as_str();
+        }
+
+        result += &format!("]\n");
         result
     }
 }

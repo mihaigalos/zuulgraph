@@ -29,17 +29,19 @@ impl DotGenerator {
 
         let mut job_name: String = "".to_string();
         let mut job_parent: String = "".to_string();
+        let mut attributes: Vec<String> = Vec::new();;
 
         for hashed_job in jobs.as_vec().unwrap() {
             for job in hashed_job.as_hash().unwrap() {
                 for field in job.1.as_hash().unwrap() {
-                    result += &self.generate_node_and_edge(
+                    &self.generate_node_and_edge(
                         field,
-                        &hex_color,
                         &mut job_name,
                         &mut job_parent,
+                        &mut attributes,
                     );
                 }
+                result += &OutputWriter::write_output(&job_name, &job_parent, &attributes, hex_color );
             }
         }
         result
@@ -48,17 +50,21 @@ impl DotGenerator {
     fn generate_node_and_edge(
         &self,
         field: (&yaml_rust::yaml::Yaml, &yaml_rust::yaml::Yaml),
-        hex_color: &String,
         job_name: &mut String,
         job_parent: &mut String,
-    ) -> String {
-        let mut result: String = "".to_string();
+        attributes: &mut Vec<String>
+    ) {
         if field.0.as_str() == Some("name") {
             *job_name = field.1.as_str().unwrap().to_owned();
         } else if field.0.as_str() == Some("parent") {
             *job_parent = field.1.as_str().unwrap().to_owned();
-            result = OutputWriter::write_output(job_name, job_parent, hex_color);
+            
+        }else if field.0.as_str() == Some("vars") {
+            for var_tuple in field.1.as_hash().unwrap() {
+                let name=var_tuple.0.as_str().unwrap();
+                let value=var_tuple.1.as_str().unwrap_or("");
+                attributes.push(format!("{}: {}",name,value));
+            }
         }
-        result
     }
 }

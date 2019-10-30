@@ -17,6 +17,7 @@ mod tests {
         let expected = concat!(
             "digraph D {\n",
             "  rankdir=RL;\n",
+            "  node[shape=record]\n",
             "  \"JobB_file1\" -> \"A_file2\"\n",
             "  \"JobB_file1\" [style=filled, fillcolor=\"\"]\n",
             "  \"JobC_file1\" -> \"JobB_file1\"\n",

@@ -41,7 +41,8 @@ impl DotGenerator {
                         &mut attributes,
                     );
                 }
-                result += &OutputWriter::write_output(&job_name, &job_parent, &attributes, hex_color );
+                result +=
+                    &OutputWriter::write_output(&job_name, &job_parent, &attributes, hex_color);
             }
         }
         result
@@ -52,18 +53,17 @@ impl DotGenerator {
         field: (&yaml_rust::yaml::Yaml, &yaml_rust::yaml::Yaml),
         job_name: &mut String,
         job_parent: &mut String,
-        attributes: &mut Vec<String>
+        attributes: &mut Vec<String>,
     ) {
         if field.0.as_str() == Some("name") {
             *job_name = field.1.as_str().unwrap().to_owned();
         } else if field.0.as_str() == Some("parent") {
             *job_parent = field.1.as_str().unwrap().to_owned();
-            
-        }else if field.0.as_str() == Some("vars") {
+        } else if field.0.as_str() == Some("vars") {
             for var_tuple in field.1.as_hash().unwrap() {
-                let name=var_tuple.0.as_str().unwrap();
-                let value=var_tuple.1.as_str().unwrap_or("");
-                attributes.push(format!("{}: {}",name,value));
+                let name = var_tuple.0.as_str().unwrap();
+                let value = var_tuple.1.as_str().unwrap_or("");
+                attributes.push(format!("{}: {}", name, value));
             }
         }
     }
